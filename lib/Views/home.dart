@@ -1,5 +1,5 @@
-import 'package:bucketcheck/Pages/complete_page.dart';
-import 'package:bucketcheck/Pages/view_page.dart';
+import 'package:bucketcheck/Views/complete_page.dart';
+import 'package:bucketcheck/Views/view_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 

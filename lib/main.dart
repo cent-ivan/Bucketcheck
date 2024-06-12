@@ -1,5 +1,5 @@
-import 'package:bucketcheck/Pages/add_bucket.dart';
-import 'package:bucketcheck/Pages/home.dart';
+import 'package:bucketcheck/Views/add_bucket.dart';
+import 'package:bucketcheck/Views/home.dart';
 import 'package:bucketcheck/ViewModels/bucket_viewModel.dart';
 import 'package:bucketcheck/ViewModels/home_viewModel.dart';
 import 'package:flutter/material.dart';
