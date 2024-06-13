@@ -70,7 +70,7 @@ class _ViewPageState extends State<ViewPage> {
               ),
 
               const SizedBox(
-                height: 10,
+                height: 9,
               ),
 
               const Text(
@@ -82,7 +82,7 @@ class _ViewPageState extends State<ViewPage> {
               Consumer<CheckListViewModel>(builder: (context, checkListValue, child) => Padding(
                   padding: const EdgeInsets.all(9),
                   child: Container(
-                    height: 350,
+                    height: 290,
                     child: ListView.builder(
                       itemCount: checkListValue.checkLists.length,
                       itemBuilder: (cont, i) {
@@ -102,7 +102,7 @@ class _ViewPageState extends State<ViewPage> {
                                 Consumer<CheckListViewModel>(builder: (context, checkListValue, child) => Padding(
                                     padding: const EdgeInsets.all(9),
                                     child: Container(
-                                      height: 350,
+                                      height: 290,
                                       child: ListView.builder(
                                         itemCount: checkListValue.checkLists.length,
                                         itemBuilder: (cont, i) {
@@ -128,24 +128,24 @@ class _ViewPageState extends State<ViewPage> {
                                                   ),
                                                 ),
 
-                              Expanded(child: checkListValue.displayCheckList(i)),
+                                              Expanded(child: checkListValue.displayCheckList(i)),
 
-                              Expanded(
-                                flex: 0,
-                                child: IconButton(
-                                  onPressed: () => checkListValue.deleteCheck(i),
-                                  icon: const Icon(Icons.delete),
-                                ),
-                              )
-                              
-                            ],
-                          ),
-                        );
-                      }
-                    ),
-                  ),
-                )
-              ),
+                                              Expanded(
+                                                flex: 0,
+                                                child: IconButton(
+                                                  onPressed: () => checkListValue.deleteCheck(i),
+                                                  icon: const Icon(Icons.delete),
+                                                ),
+                                              )
+                                              
+                                            ],
+                                          ),
+                                        );
+                                      }
+                                    ),
+                                  ),
+                                )
+                              ),
                                 
                               
                             ],
