@@ -67,7 +67,7 @@ class _HomeState extends State<Home> {
 
         floatingActionButton: SpeedDial(
           backgroundColor: const Color.fromRGBO(139, 203, 176,1),
-          overlayColor: Colors.grey[400],
+          overlayColor: Color.fromARGB(148, 213, 212, 212),
           animatedIcon: AnimatedIcons.add_event,
           children: [
             //Create bucket (not yet done)
