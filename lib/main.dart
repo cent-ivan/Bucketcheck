@@ -1,7 +1,6 @@
-import 'package:bucketcheck/Views/add_bucket.dart';
-import 'package:bucketcheck/Views/home.dart';
-import 'package:bucketcheck/ViewModels/bucket_viewModel.dart';
-import 'package:bucketcheck/ViewModels/home_viewModel.dart';
+import 'package:bucketcheck/ViewModels/complete_viewModel.dart';
+import 'package:bucketcheck/Views/base.dart';
+import 'package:bucketcheck/ViewModels/active_viewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,8 +8,8 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: ((context) => BucketListViewModel())),
-        ChangeNotifierProvider(create: ((context) => CheckListViewModel()))
+        ChangeNotifierProvider(create: ((context) => ActiveViewModel())),
+        ChangeNotifierProvider(create: ((context) => CompletedViewModel())),
       ],
       child: const MainApp(),
     )
@@ -32,7 +31,7 @@ class MainApp extends StatelessWidget {
       ),
       home: const Home(),
       routes: {
-        "/add_bucket":(context) => const AddBucket()
+        '/home': (context) => const Home()
       },
     );
   }
