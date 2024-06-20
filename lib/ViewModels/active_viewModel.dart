@@ -114,7 +114,7 @@ class ActiveViewModel extends ChangeNotifier{
                   TextField(
                     textCapitalization: TextCapitalization.sentences,
                     style: const TextStyle(fontWeight: FontWeight.bold),
-                    maxLength: 20,
+                    maxLength: 28,
                     controller: _addCheckController,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
