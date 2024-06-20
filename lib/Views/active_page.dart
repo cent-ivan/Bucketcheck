@@ -1,17 +1,16 @@
-import 'package:bucketcheck/ViewModels/bucket_viewModel.dart';
-import 'package:bucketcheck/ViewModels/home_viewModel.dart';
+import 'package:bucketcheck/ViewModels/active_viewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ViewPage extends StatefulWidget {
-  const ViewPage({super.key});
+class ActivePage extends StatefulWidget {
+  const ActivePage({super.key});
 
   @override
-  State<ViewPage> createState() => _ViewPageState();
+  State<ActivePage> createState() => _ActivePageState();
 }
 
-class _ViewPageState extends State<ViewPage> {
-
+class _ActivePageState extends State<ActivePage> {
+  
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -20,147 +19,68 @@ class _ViewPageState extends State<ViewPage> {
           padding: const EdgeInsets.all(15),
           decoration: const BoxDecoration(
             color: Color.fromRGBO(164, 234, 205, 0.85),
-            borderRadius: BorderRadius.all(Radius.circular(15))
+            borderRadius: BorderRadius.all(Radius.circular(10))
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                "Bucket Lists", 
-                style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1, fontSize: 24)
-              ),
-
-              //Bucket List Buttons
-              Consumer<BucketListViewModel>(builder: (context, bucketListValue, child) => Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Container(
-                    height: 100,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: bucketListValue.bucketLists.length,
-                      itemBuilder: (cont, i) {
-                        return Container(
-                          width: 250,
-                          margin: const EdgeInsets.all(10),
-                          padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(15)),
-                            color: Color.fromRGBO(139, 203, 176,1)
-                          ),
-                          child: Row(
-                            children: [
-                              //Texts found in the todo tile
-                              Expanded(child: bucketListValue.displayBucketList(i)),
-
-                              Expanded(
-                                flex: 0,
-                                child: IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(Icons.arrow_forward_ios),
-                                  iconSize: 20,
-                                ),
-                              )
-                            ],
-                          ),
-                        );
-                      }
+          child: Consumer<ActiveViewModel>(builder: (context, activeValue, child) => Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                   Expanded(
+                      child: Text(
+                        activeValue.title, 
+                        style: const TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1, fontSize: 20)
+                      ),
                     ),
-                  ),
+
+                    IconButton(
+                      onPressed: () => (activeValue.changeTitle(context)),
+                      icon: const Icon(Icons.edit_rounded),
+                    )
+                  ],
                 ),
-              ),
 
-              const SizedBox(
-                height: 9,
-              ),
+                //Active Check List Tiles 
+                Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Container(
+                      height: 430,
+                      child: ListView.builder(
+                        itemCount: activeValue.checkLists.length,
+                        itemBuilder: (cont, i) {
+                          return Container( //Box properties that contains checklists info
+                            margin: const EdgeInsets.all(10),
 
-              const Text(
-                "My Checklists", 
-                style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1, fontSize: 24)
-              ),
+                            decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                              color: Color.fromRGBO(139, 203, 176,1)
+                            ),
 
-              //Check List Buttons
-              Consumer<CheckListViewModel>(builder: (context, checkListValue, child) => Padding(
-                  padding: const EdgeInsets.all(9),
-                  child: Container(
-                    height: 290,
-                    child: ListView.builder(
-                      itemCount: checkListValue.checkLists.length,
-                      itemBuilder: (cont, i) {
-                        return Container(
-                          height: checkListValue.checkLists[i].isChecked == false ? 100:0,
-                          width: checkListValue.checkLists[i].isChecked == false ? 200:0,
-                          margin: const EdgeInsets.all(10),
-
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(15)),
-                            color: Color.fromRGBO(139, 203, 176,1)
-                          ),
-                          child: Row(
-                            children: [
-                              if (checkListValue.checkList.isChecked == false)
-                                //Check List Buttons
-                                Consumer<CheckListViewModel>(builder: (context, checkListValue, child) => Padding(
-                                    padding: const EdgeInsets.all(9),
-                                    child: Container(
-                                      height: 290,
-                                      child: ListView.builder(
-                                        itemCount: checkListValue.checkLists.length,
-                                        itemBuilder: (cont, i) {
-                                          return Container(
-                                            height: checkListValue.checkLists[i].isChecked == false ? 100:0,
-                                            width: checkListValue.checkLists[i].isChecked == false ? 200:0,
-                                            margin: const EdgeInsets.all(10),
-
-                                            decoration: const BoxDecoration(
-                                              borderRadius: BorderRadius.all(Radius.circular(15)),
-                                              color: Color.fromRGBO(139, 203, 176,1)
-                                            ),
-                                            child: Row(
-                                              children: [
-                                                //not yet tested
-                                                if (checkListValue.checkList.isChecked == false)
-                                                  Expanded(
-                                                  flex: 0,
-                                                  child: Checkbox(
-                                                    activeColor: const Color.fromRGBO(139, 203, 176,1),
-                                                    value: checkListValue.checkLists[i].isChecked,
-                                                    onChanged: (value) => checkListValue.changeCheckBox(value, i),
-                                                  ),
-                                                ),
-
-                                              Expanded(child: checkListValue.displayCheckList(i)),
-
-                                              Expanded(
-                                                flex: 0,
-                                                child: IconButton(
-                                                  onPressed: () => checkListValue.deleteCheck(i),
-                                                  icon: const Icon(Icons.delete),
-                                                ),
-                                              )
-                                              
-                                            ],
-                                          ),
-                                        );
-                                      }
+                            //delete button
+                            child: Row(
+                              children: [
+                                  Expanded(flex: 4, child: activeValue.displayCheckList(i, context)),
+                                  Expanded(
+                                    child: IconButton(
+                                      color: const Color.fromARGB(255, 168, 45, 45),
+                                      icon: const Icon(Icons.delete),
+                                      onPressed: () => activeValue.deleteCheck(context),
                                     ),
-                                  ),
-                                )
-                              ),
-                                
-                              
-                            ],
-                          ),
-                        );
-                      }
+                                  )
+                                  
+                              ],
+                            ),
+                          );
+                        }
+                      ),
                     ),
-                  ),
-                )
-              ),
+                  )
               
-
-            ],
+              ]
+            ),
           ),
-        ),
+
+        )
       );
 
   }
