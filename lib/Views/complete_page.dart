@@ -62,6 +62,7 @@ class _CompletedState extends State<Completed> {
                                 Expanded(flex: 4, child: completeValue.displayCompleted(i)),
                                 Expanded(
                                     child: IconButton(
+                                      color: const Color.fromARGB(255, 168, 45, 45),
                                       icon: const Icon(Icons.delete),
                                       onPressed: () => completeValue.deleteCheck(i),
                                     ),
