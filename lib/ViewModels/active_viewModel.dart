@@ -221,7 +221,6 @@ class ActiveViewModel extends ChangeNotifier{
     
     //automatically sort base on time
     sortByTime(checkLists);
-    time = const TimeOfDay(hour: 0, minute: 0);
     notifyListeners();
     Navigator.of(context).pop();
 }
