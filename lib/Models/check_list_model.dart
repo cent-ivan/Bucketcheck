@@ -1,9 +1,9 @@
 class CheckList {
   String? checkListName;
   String? place;
-  DateTime? checkListDate;
+  String? checkListDate;
   bool? isChecked;
-  int? bucketKey;
+  int? bucketId;
 
   CheckList({this.checkListName, this.place, this.checkListDate, this.isChecked});
 }
