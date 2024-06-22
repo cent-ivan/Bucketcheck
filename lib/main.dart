@@ -5,9 +5,17 @@ import 'package:bucketcheck/ViewModels/active_viewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
 
 void main() async { 
   WidgetsFlutterBinding.ensureInitialized();
+
+  //Set preferred orientation
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown
+  ]);
+
   await Hive.initFlutter();
   Hive.registerAdapter(CheckListAdapter());
 
