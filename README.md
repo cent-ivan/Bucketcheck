@@ -1,3 +1,3 @@
 # bucketcheck
 
-A new Flutter project.
+My ToDo App side project. Built with Hive local database.
