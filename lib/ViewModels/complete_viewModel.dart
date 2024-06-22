@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:bucketcheck/Models/check_list_model.dart';
 
 class CompletedViewModel extends ChangeNotifier{
 
-  List<CheckList> completedLists = [];
+  List completedLists = [];
 
 
   Widget displayCompleted(i){
