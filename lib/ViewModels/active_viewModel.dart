@@ -1,3 +1,4 @@
+import 'package:bucketcheck/Db/database.dart';
 import 'package:bucketcheck/ViewModels/complete_viewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:bucketcheck/Models/check_list_model.dart';
@@ -5,15 +6,21 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class ActiveViewModel extends ChangeNotifier{
-  //list of checklists
-   List<CheckList> checkLists = [];
+  //initialize db
+  LocalDatabase db = LocalDatabase();
+
+  ActiveViewModel(){
+    db.loadData();
+    db.getTitle();
+    notifyListeners();
+  }
 
   //Text filed controllers
   final _controller = TextEditingController(); //controller of title
   final _addCheckController = TextEditingController(); //controller of checklist name
   final _addPlaceController = TextEditingController(); //controller of add place
 
-  String title = "My Checklists"; //default checklist title
+  static String title = "";
 
   String checkListName = "";
   String place = "";
@@ -34,7 +41,7 @@ class ActiveViewModel extends ChangeNotifier{
             flex: 0,
             child: Checkbox(
               activeColor: const Color.fromRGBO(139, 203, 176,1),
-              value: checkLists[i].isChecked,
+              value: db.checkLists[i].isChecked,
               onChanged: (value) => changeCheckBox(value, i, context),
               ),
             ),
@@ -46,14 +53,14 @@ class ActiveViewModel extends ChangeNotifier{
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("${checkLists[i].checkListName}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),),
-                  Text("${checkLists[i].place}", style: const TextStyle(fontSize: 12,),),
+                  Text("${db.checkLists[i].checkListName}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),),
+                  Text("${db.checkLists[i].place}", style: const TextStyle(fontSize: 12,),),
               
                   const SizedBox(
                     height: 15,
                   ),
               
-                  Text("${checkLists[i].checkListDate}", style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),),
+                  Text("${db.checkLists[i].checkListDate}", style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),),
                 ],
               ),
             ),
@@ -65,11 +72,14 @@ class ActiveViewModel extends ChangeNotifier{
 
    //changing the value of the checkbox
   void changeCheckBox(value, i, BuildContext context){
-    checkLists[i].isChecked = value ;
+    db.checkLists[i].isChecked = value ;
 
     final completed = context.read<CompletedViewModel>(); //remember this to record changes in other classes
-    completed.completedLists.add(CheckList(checkListName: checkLists[i].checkListName, place: checkLists[i].place, checkListDate: checkLists[i].checkListDate, isChecked: checkLists[i].isChecked));
+    completed.completedLists.add(CheckList(checkListName: db.checkLists[i].checkListName, place: db.checkLists[i].place, checkListDate: db.checkLists[i].checkListDate, isChecked: db.checkLists[i].isChecked));
+   
+
     deleteCheck(i);
+    db.updateData();
     notifyListeners();
   } 
 
@@ -211,16 +221,18 @@ class ActiveViewModel extends ChangeNotifier{
       return;
     }
     else{
-      checkLists.add(CheckList(
+      db.checkLists.add(CheckList(
         checkListName: checkListName,
         place: place,
         checkListDate: time.format(context).toString(),
         isChecked: false)
       );
+      db.updateData();
+
     }
     
     //automatically sort base on time
-    sortByTime(checkLists);
+    sortByTime(db.checkLists);
     notifyListeners();
     Navigator.of(context).pop();
 }
@@ -233,7 +245,7 @@ class ActiveViewModel extends ChangeNotifier{
   }
 
   //sorting time
-  void sortByTime(List<CheckList> checkLists) {
+  void sortByTime(checkLists) {
   checkLists.sort((a, b) {
     TimeOfDay aTime = parseTimeOfDay(a.checkListDate!);
     TimeOfDay bTime = parseTimeOfDay(b.checkListDate!);
@@ -300,13 +312,21 @@ class ActiveViewModel extends ChangeNotifier{
 
   //save method for dialog buttons
   void onSave(context){
-    title = _controller.text;
+    if (_controller.text.isEmpty){
+      title = "My Checklist";
+    }
+    else{
+      title = _controller.text;
+    }
+    
+    db.changeTitle(title);
     notifyListeners();
     Navigator.of(context).pop();
   }
   
-  void deleteCheck(i){
-    checkLists.removeAt(i);
+  void deleteCheck(int i){
+    db.checkLists.removeAt(i);
+    db.updateData();
     notifyListeners();
   }
 

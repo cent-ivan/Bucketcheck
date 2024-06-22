@@ -18,7 +18,7 @@ class _ActivePageState extends State<ActivePage> {
         child: Container(
           padding: const EdgeInsets.all(15),
           decoration: const BoxDecoration(
-            color: Color.fromRGBO(164, 234, 205, 0.85),
+            color: Color.fromRGBO(164, 234, 205, 0.7),
             borderRadius: BorderRadius.all(Radius.circular(10))
           ),
           child: Consumer<ActiveViewModel>(builder: (context, activeValue, child) => Column(
@@ -28,7 +28,7 @@ class _ActivePageState extends State<ActivePage> {
                   children: [
                    Expanded(
                       child: Text(
-                        activeValue.title, 
+                        ActiveViewModel.title, 
                         style: const TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1, fontSize: 20)
                       ),
                     ),
@@ -46,7 +46,7 @@ class _ActivePageState extends State<ActivePage> {
                     child: Container(
                       height: 430,
                       child: ListView.builder(
-                        itemCount: activeValue.checkLists.length,
+                        itemCount: activeValue.db.checkLists.length,
                         itemBuilder: (cont, i) {
                           return Container( //Box properties that contains checklists info
                             margin: const EdgeInsets.all(10),
@@ -64,7 +64,7 @@ class _ActivePageState extends State<ActivePage> {
                                     child: IconButton(
                                       color: const Color.fromARGB(255, 168, 45, 45),
                                       icon: const Icon(Icons.delete),
-                                      onPressed: () => activeValue.deleteCheck(context),
+                                      onPressed: () => activeValue.deleteCheck(i),
                                     ),
                                   )
                                   

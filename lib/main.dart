@@ -1,10 +1,19 @@
+import 'package:bucketcheck/Models/check_list_model.dart';
 import 'package:bucketcheck/ViewModels/complete_viewModel.dart';
 import 'package:bucketcheck/Views/base.dart';
 import 'package:bucketcheck/ViewModels/active_viewModel.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 
-void main() { 
+void main() async { 
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  Hive.registerAdapter(CheckListAdapter());
+
+  await Hive.openBox<List>('bucketbox');
+  await Hive.openBox('title');
+
   runApp(
     MultiProvider(
       providers: [
