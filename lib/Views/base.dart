@@ -25,7 +25,7 @@ class _HomeState extends State<Home> {
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: const Text(
-            "My Bucket Checklist", 
+            "Bucket Checklist", 
             style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 2, fontSize: 26),
           ),
           backgroundColor: Colors.white,
@@ -69,6 +69,7 @@ class _HomeState extends State<Home> {
         ),
 
         floatingActionButton: Consumer<ActiveViewModel>(builder: (context, activeValue, child) => SpeedDial(
+          elevation: 0,
           buttonSize: const Size(60, 60),
           backgroundColor: const Color.fromRGBO(139, 203, 176,1),
           overlayColor: const Color.fromARGB(148, 213, 212, 212),
