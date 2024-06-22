@@ -10,7 +10,7 @@ class ActiveViewModel extends ChangeNotifier{
   LocalDatabase db = LocalDatabase();
 
   ActiveViewModel(){
-    db.loadData();
+    db.loadActiveData();
     db.getTitle();
     notifyListeners();
   }
@@ -77,9 +77,8 @@ class ActiveViewModel extends ChangeNotifier{
     final completed = context.read<CompletedViewModel>(); //remember this to record changes in other classes
     completed.completedLists.add(CheckList(checkListName: db.checkLists[i].checkListName, place: db.checkLists[i].place, checkListDate: db.checkLists[i].checkListDate, isChecked: db.checkLists[i].isChecked));
    
-
     deleteCheck(i);
-    db.updateData();
+    db.updateActiveData();
     notifyListeners();
   } 
 
@@ -227,7 +226,7 @@ class ActiveViewModel extends ChangeNotifier{
         checkListDate: time.format(context).toString(),
         isChecked: false)
       );
-      db.updateData();
+      db.updateActiveData();
 
     }
     
@@ -326,7 +325,7 @@ class ActiveViewModel extends ChangeNotifier{
   
   void deleteCheck(int i){
     db.checkLists.removeAt(i);
-    db.updateData();
+    db.updateActiveData();
     notifyListeners();
   }
 
