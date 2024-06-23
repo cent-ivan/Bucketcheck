@@ -1,8 +1,14 @@
+import 'package:bucketcheck/Db/database.dart';
 import 'package:flutter/material.dart';
 
 class CompletedViewModel extends ChangeNotifier{
+  //Initialize database
+  LocalDatabase db = LocalDatabase();
 
-  List completedLists = [];
+  CompletedViewModel(){
+    db.loadCompleteData();
+    notifyListeners();
+  }
 
 
   Widget displayCompleted(i){
@@ -15,7 +21,7 @@ class CompletedViewModel extends ChangeNotifier{
             flex: 0,
             child: Checkbox(
               activeColor: const Color.fromRGBO(139, 203, 176,1),
-              value: completedLists[i].isChecked,
+              value: db.completedLists[i].isChecked,
               onChanged: (value) => (),
               ),
             ),
@@ -24,12 +30,12 @@ class CompletedViewModel extends ChangeNotifier{
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("${completedLists[i].checkListName}", style: const TextStyle(fontWeight: FontWeight.bold, decoration: TextDecoration.lineThrough, fontSize: 18),),
-                Text("${completedLists[i].place}", style: const TextStyle(fontSize: 12),),
+                Text("${db.completedLists[i].checkListName}", style: const TextStyle(fontWeight: FontWeight.bold, decoration: TextDecoration.lineThrough, fontSize: 18),),
+                Text("${db.completedLists[i].place}", style: const TextStyle(fontSize: 12),),
                 const SizedBox(
                   height: 15,
                 ),
-                Text("${completedLists[i].checkListDate}", style: const TextStyle(fontSize: 12),),
+                Text("${db.completedLists[i].checkListDate}", style: const TextStyle(fontSize: 12),),
               ],
             ),
           ),
@@ -39,13 +45,15 @@ class CompletedViewModel extends ChangeNotifier{
   }
 
   void deleteCheck(i){
-    completedLists.removeAt(i);
+    db.completedLists.removeAt(i);
+    db.updateCompleteData();
     notifyListeners();
     
   }
 
   void clearAll(){
-    completedLists.clear();
+    db.completedLists.clear();
+    db.updateCompleteData();
     notifyListeners();
   }
 } 

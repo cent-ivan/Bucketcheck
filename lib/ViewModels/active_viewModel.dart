@@ -11,6 +11,7 @@ class ActiveViewModel extends ChangeNotifier{
 
   ActiveViewModel(){
     db.loadActiveData();
+    db.loadCompleteData();
     db.getTitle();
     notifyListeners();
   }
@@ -75,7 +76,9 @@ class ActiveViewModel extends ChangeNotifier{
     db.checkLists[i].isChecked = value ;
 
     final completed = context.read<CompletedViewModel>(); //remember this to record changes in other classes
-    completed.completedLists.add(CheckList(checkListName: db.checkLists[i].checkListName, place: db.checkLists[i].place, checkListDate: db.checkLists[i].checkListDate, isChecked: db.checkLists[i].isChecked));
+    completed.db.completedLists.add(CheckList(checkListName: db.checkLists[i].checkListName, place: db.checkLists[i].place, checkListDate: db.checkLists[i].checkListDate, isChecked: db.checkLists[i].isChecked));
+    db.updateCompleteData();
+    notifyListeners();
    
     deleteCheck(i);
     db.updateActiveData();
