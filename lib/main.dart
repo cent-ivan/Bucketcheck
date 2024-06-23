@@ -20,6 +20,7 @@ void main() async {
   Hive.registerAdapter(CheckListAdapter());
 
   await Hive.openBox<List>('bucketbox');
+  await Hive.openBox<List>('completebox');
   await Hive.openBox('title');
 
   runApp(
