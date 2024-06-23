@@ -48,7 +48,7 @@ class _CompletedState extends State<Completed> {
                     child: Container(
                       height: 450,
                       child: ListView.builder(
-                        itemCount: completeValue.completedLists.length,
+                        itemCount: completeValue.db.completedLists.length,
                         itemBuilder: (cont, i) {
                           return Container( //Box properties that contains checklists info
                             margin: const EdgeInsets.all(10),
