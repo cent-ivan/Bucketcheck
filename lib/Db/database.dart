@@ -8,7 +8,15 @@ class LocalDatabase{
   final _bucketbox = Hive.box<List>('bucketbox');
 
   void loadActiveData(){
-    checkLists = _bucketbox.get('ACTIVELIST')!;
+    //checkLists = _bucketbox.get('ACTIVELIST')!;
+    var activeList = _bucketbox.get('ACTIVELIST');
+    if (activeList != null) {
+      checkLists = activeList;
+    } else {
+      _bucketbox.put('ACTIVELIST', checkLists);
+      activeList = _bucketbox.get('ACTIVELIST');
+      checkLists = activeList!;
+    }
   }
 
   void updateActiveData(){
@@ -24,7 +32,15 @@ class LocalDatabase{
   final _completetbox = Hive.box<List>('completebox');
 
   void loadCompleteData() {
-    completedLists =  _completetbox.get('COMPLETELIST')!;
+    //completedLists =  _completetbox.get('COMPLETELIST')!;
+    var completeList = _completetbox.get('COMPLETELIST');
+    if (completeList != null) {
+      completedLists = completeList;
+    } else {
+      _bucketbox.put('ACTIVELIST', checkLists);
+      completeList = _bucketbox.get('ACTIVELIST');
+      checkLists = completeList!;
+    }
   }
 
   void updateCompleteData(){
