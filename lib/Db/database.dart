@@ -24,8 +24,6 @@ class LocalDatabase{
   }
 
 
-
-
   //Complete checklist storage
   List completedLists = [];
 
@@ -37,6 +35,7 @@ class LocalDatabase{
     if (completeList != null) {
       completedLists = completeList;
     } else {
+      //if initial open added default list
       _bucketbox.put('ACTIVELIST', checkLists);
       completeList = _bucketbox.get('ACTIVELIST');
       checkLists = completeList!;
